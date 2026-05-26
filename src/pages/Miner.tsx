@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import { CodeRain } from "@/components/CodeRain"
-import func2url from "../../func2url.json"
+import func2url from "../../backend/func2url.json"
 
 const PTC_PER_CLICK = 0.00000000000001
 const BOOST_COST_RUB = 1000
