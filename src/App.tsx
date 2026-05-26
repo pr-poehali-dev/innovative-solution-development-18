@@ -1,28 +1,43 @@
+import { useState, useEffect } from "react"
+import { Toaster } from "@/components/ui/toaster"
+import { Toaster as Sonner } from "@/components/ui/sonner"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import AuthPage from "./pages/Auth"
+import MinerPage from "./pages/Miner"
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
+interface User {
+  email: string
+  token: string
+}
 
-const queryClient = new QueryClient();
+const App = () => {
+  const [user, setUser] = useState<User | null>(null)
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
+  useEffect(() => {
+    const token = localStorage.getItem("ptc_token")
+    const email = localStorage.getItem("ptc_email")
+    if (token && email) {
+      setUser({ token, email })
+    }
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem("ptc_token")
+    localStorage.removeItem("ptc_email")
+    setUser(null)
+  }
+
+  return (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      {user ? (
+        <MinerPage email={user.email} token={user.token} onLogout={handleLogout} />
+      ) : (
+        <AuthPage onAuth={setUser} />
+      )}
     </TooltipProvider>
-  </QueryClientProvider>
-);
+  )
+}
 
-export default App;
+export default App

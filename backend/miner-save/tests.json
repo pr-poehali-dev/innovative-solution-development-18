@@ -1,0 +1,11 @@
+{
+  "tests": [
+    {
+      "name": "Сохранение без токена — 401",
+      "method": "POST",
+      "path": "/",
+      "body": {"clicks": 100, "boost_level": 0},
+      "expectedStatus": 401
+    }
+  ]
+}

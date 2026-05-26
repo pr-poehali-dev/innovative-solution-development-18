@@ -1,0 +1,11 @@
+{
+  "tests": [
+    {
+      "name": "Регистрация нового пользователя",
+      "method": "POST",
+      "path": "/",
+      "body": {"email": "test_miner_888@example.com", "password": "test123456"},
+      "expectedStatus": 200
+    }
+  ]
+}
