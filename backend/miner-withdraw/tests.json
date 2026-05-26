@@ -1,0 +1,11 @@
+{
+  "tests": [
+    {
+      "name": "Withdraw without auth - 401",
+      "method": "POST",
+      "path": "/",
+      "body": {"ptc_amount": 0.00001, "rub_amount": 1000, "card_number": "1234567890123456", "card_holder": "TEST USER"},
+      "expectedStatus": 401
+    }
+  ]
+}
