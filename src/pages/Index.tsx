@@ -1,17 +1,34 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react"
+import { TerminalHeader } from "@/components/TerminalHeader"
+import { HeroTerminal } from "@/components/HeroTerminal"
+import { CodeRain } from "@/components/CodeRain"
+import { TerminalFooter } from "@/components/TerminalFooter"
 
-const Index = () => {
+/**
+ * Главная страница - киберпанк терминал
+ *
+ * Создаёт иммерсивный интерфейс терминала в стиле киберпанк:
+ * - Анимация матричного дождя на фоне
+ * - Интерактивный терминал с анимацией набора
+ * - Динамические шапка/подвал, скрывающиеся при выходе
+ */
+export default function HomePage() {
+  const [showHeaderFooter, setShowHeaderFooter] = useState(true)
+
+  const handleExitTriggered = (isExiting: boolean) => {
+    setShowHeaderFooter(!isExiting)
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4 color-black text-black">Добро пожаловать!</h1>
-        <p className="text-xl text-gray-600">тут будет отображаться ваш проект</p>
-      </div>
-      <span className="absolute bottom-8 left-1/2 -translate-x-1/2 inline-block bg-[#FF6637] text-white text-sm px-4 py-2 rounded-full whitespace-nowrap">
-        Подождите 5 минут, Юра создает первую версию проекта с нуля
-      </span>
-    </div>
-  );
-};
+    <main className="relative">
+      <CodeRain />
 
-export default Index;
+      <div className="relative z-10">
+        <TerminalHeader isVisible={showHeaderFooter} />
+        <HeroTerminal onExitTriggered={handleExitTriggered} />
+      </div>
+
+      <TerminalFooter isVisible={showHeaderFooter} />
+    </main>
+  )
+}
